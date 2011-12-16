@@ -22,21 +22,22 @@ end
 parameterSetup 
 
 % set the simulation conditions
+Nsearch=[750];
 M=100; % size of map
 time=30; % time span in years
 run=10; % number of simulations
 
-countryID=2; % select a country to be simulated
+countryID=3; % select a country to be simulated
 chemo=0; % 1 if chemoprophylaxis is chosen as a strategy to control TB, 0 if not
 rateChemSuc=0.5; % estimated success rate of chemoprophylaxis
 
 k=0;
-for N=200:50:500
-k=k+1;
-inc=zeros(7,run,time);
-
+for k=1:length(Nsearch)
+N=Nsearch(k);
+inc=zeros(length(Nsearch),run,time);
+N
 for j=1:run
-
+j
 % initialization of agents
 agents=Agent.empty(N,0);
 
@@ -67,7 +68,7 @@ for i=1:N;
 end
 
 for t=1:time  
-
+t
     % agent update
     agents2=agents;order=randperm(length(agents));
     for i=1:length(agents)
@@ -139,9 +140,9 @@ end
 
 end
 end
-save('China_preliminary','inc')
-averInc=zeros(run,7);
-for k=1:7
+save('SouthKorea_preliminary3','inc')
+averInc=zeros(run,length(Nsearch));
+for k=1:length(Nsearch)
     for j=1:run
         for t=1:time
             averInc(j,k)=averInc(j,k)+inc(k,j,t);
@@ -150,13 +151,14 @@ for k=1:7
     end
 end
 subplot(1,2,1)
-plot(200:50:500,averInc,'b')
+plot(Nsearch,averInc,'b')
 set(gca,'FontSize',16)
 xlabel('number of agents','FontSize',16)
 ylabel('incidence','FontSize',16)
-xlim([200 500])
+xlim([min(Nsearch) max(Nsearch)])
 subplot(1,2,2)
-errorbar(200:50:500,mean(averInc),std(averInc),'k')
+errorbar(Nsearch,mean(averInc),std(averInc),'r')
 set(gca,'FontSize',16)
 xlabel('number of agents','FontSize',16)
 ylabel('incidence','FontSize',16)
+xlim([min(Nsearch) max(Nsearch)+10])

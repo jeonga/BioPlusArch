@@ -54,7 +54,7 @@ classdef Agent < handle
                 dy=agent.y-agents(i).y;
                 d=sqrt(dx*dx+dy*dy);
                 if d<agent.maxD
-                   % patch([agent.x agents(i).x],[agent.y agents(i).y],'k','EdgeColor','b')
+                    patch([agent.x agents(i).x],[agent.y agents(i).y],'k','EdgeColor','b')
                     if agent.HIVstatus==0
                         if (agents(i).TBstatus==2)&&(rand<probInf)
                             agent.TBstatus=1;

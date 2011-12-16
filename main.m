@@ -22,13 +22,13 @@ end
 parameterSetup 
 
 % set the simulation conditions
-N=425; % number of agents
+N=675; % number of agents
 M=100; % size of map
 time=100; % time span in years
-run=2; % number of simulations
+run=3; % number of simulations
 
-countryID=1; % select a country to be simulated
-chemo=0; % 1 if chemoprophylaxis is chosen as a strategy to control TB, 0 if not
+countryID=2; % select a country to be simulated
+chemo=1; % 1 if chemoprophylaxis is chosen as a strategy to control TB, 0 if not
 rateChemSuc=0.5; % estimated success rate of chemoprophylaxis
 
 % preallocate variables for epidemiological data concerned
@@ -38,8 +38,11 @@ rMDRtot=zeros(run,time+1);rMDRlat=zeros(run,time+1);rMDRact=zeros(run,time+1);
 ratioMDR=zeros(run,time+1);
 inc=zeros(run,time);
 
-for j=1:run
+% initialize movie
+mov = avifile('TB_movie.avi');
 
+for j=1:run
+j
 % initialization of agents
 agents=Agent.empty(N,0);
 
@@ -76,7 +79,8 @@ ratioMDR(j,1)=rMDRact(j,1)/rTBact(j,1);
 figure()
 for t=1:time  
     % draw agents in the space
-    drawAgents
+    drawAgentsInSpace
+
     % agent update
     agents2=agents;order=randperm(length(agents));
     for i=1:length(agents)
@@ -144,11 +148,17 @@ for t=1:time
     % calculate the realized prevalence of HIV, TB and MDR-TB every year
     [rHIV(j,t+1) rTBtot(j,t+1) rTBlat(j,t+1) rTBact(j,t+1) rMDRtot(j,t+1) rMDRlat(j,t+1) rMDRact(j,t+1)]=realPrevalence(agents);
     pause(0.01);
+    ratioMDR(j,1)=rMDRact(j,1)/rTBact(j,1);
     inc(j,t)=inc(j,t)/length(agents);
 
+    % create movie
+    %F = getframe(gca);
+    %mov=addframe(mov,F);
 end
 
 end
-
-save('','rHIV','rTBtot','rTBlat','rTBact','rMDRtot','rMDRlat','rMDRact','ratioMDR','inc')
+% close video file
+%mov=close(mov);
+% save the result
+save('China_with_Chemo18_20','rHIV','rTBtot','rTBlat','rTBact','rMDRtot','rMDRlat','rMDRact','ratioMDR','inc')
 plotResult
