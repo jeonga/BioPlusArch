@@ -42,7 +42,7 @@ inc=zeros(run,time);
 mov = avifile('TB_movie.avi');
 
 for j=1:run
-j
+
 % initialization of agents
 agents=Agent.empty(N,0);
 
@@ -152,13 +152,13 @@ for t=1:time
     inc(j,t)=inc(j,t)/length(agents);
 
     % create movie
-    %F = getframe(gca);
-    %mov=addframe(mov,F);
+    F = getframe(gca);
+    mov=addframe(mov,F);
 end
 
 end
 % close video file
-%mov=close(mov);
+mov=close(mov);
 % save the result
 save('China_with_Chemo18_20','rHIV','rTBtot','rTBlat','rTBact','rMDRtot','rMDRlat','rMDRact','ratioMDR','inc')
 plotResult

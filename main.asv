@@ -39,10 +39,10 @@ ratioMDR=zeros(run,time+1);
 inc=zeros(run,time);
 
 % initialize movie
-%mov = avifile('TB_movie.avi');
+mov = avifile('TB_movie.avi');
 
 for j=1:run
-j
+
 % initialization of agents
 agents=Agent.empty(N,0);
 
@@ -148,6 +148,7 @@ for t=1:time
     % calculate the realized prevalence of HIV, TB and MDR-TB every year
     [rHIV(j,t+1) rTBtot(j,t+1) rTBlat(j,t+1) rTBact(j,t+1) rMDRtot(j,t+1) rMDRlat(j,t+1) rMDRact(j,t+1)]=realPrevalence(agents);
     pause(0.01);
+    ratioMDR(j,1)=rMDRact(j,1)/rTBact(j,1);
     inc(j,t)=inc(j,t)/length(agents);
 
     % create movie
