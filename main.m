@@ -22,12 +22,12 @@ end
 parameterSetup 
 
 % set the simulation conditions
-N=675; % number of agents
+N=200; % number of agents
 M=100; % size of map
 time=100; % time span in years
-run=3; % number of simulations
+run=5; % number of simulations
 
-countryID=2; % select a country to be simulated
+countryID=1; % select a country to be simulated
 chemo=1; % 1 if chemoprophylaxis is chosen as a strategy to control TB, 0 if not
 rateChemSuc=0.5; % estimated success rate of chemoprophylaxis
 
@@ -148,7 +148,6 @@ for t=1:time
     % calculate the realized prevalence of HIV, TB and MDR-TB every year
     [rHIV(j,t+1) rTBtot(j,t+1) rTBlat(j,t+1) rTBact(j,t+1) rMDRtot(j,t+1) rMDRlat(j,t+1) rMDRact(j,t+1)]=realPrevalence(agents);
     pause(0.01);
-    ratioMDR(j,1)=rMDRact(j,1)/rTBact(j,1);
     inc(j,t)=inc(j,t)/length(agents);
 
     % create movie
@@ -160,5 +159,6 @@ end
 % close video file
 mov=close(mov);
 % save the result
-save('China_with_Chemo18_20','rHIV','rTBtot','rTBlat','rTBact','rMDRtot','rMDRlat','rMDRact','ratioMDR','inc')
+save('','rHIV','rTBtot','rTBlat','rTBact','rMDRtot','rMDRlat','rMDRact','ratioMDR','inc')
+
 plotResult

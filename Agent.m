@@ -12,7 +12,7 @@ classdef Agent < handle
         MDRstatus=0; % 0:drug-susceptible TB, 1:MDR-TB
         speed=2.0;
         angle=0.0;
-        maxD=5; % distance up to which contagion may occur
+        maxD=25; % distance up to which contagion may occur
     end
     
     methods
@@ -52,7 +52,8 @@ classdef Agent < handle
             for i=1:length(agents)
                 dx=agent.x-agents(i).x;
                 dy=agent.y-agents(i).y;
-                d=sqrt(dx*dx+dy*dy);
+                if (dx<agent.maxD)&&(dy<agent.maxD)
+                d=(dx*dx+dy*dy);
                 if d<agent.maxD
                     patch([agent.x agents(i).x],[agent.y agents(i).y],'k','EdgeColor','b')
                     if agent.HIVstatus==0
@@ -77,6 +78,8 @@ classdef Agent < handle
                         end
                     end
                 end
+                 end
+                 
             end
             end
         end
